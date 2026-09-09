@@ -8,7 +8,9 @@ const STORAGE_KEYS = {
   ACCOUNTS: 'chequeslip_accounts',
   ACTIVE_ACCOUNT_ID: 'chequeslip_active_account_id',
   HISTORY: 'chequeslip_history',
-  SETTINGS: 'chequeslip_settings'
+  SETTINGS: 'chequeslip_settings',
+  PARTIES: 'chequeslip_parties',
+  ONBOARDING_SEEN: 'chequeslip_onboarding_seen'
 };
 
 const DEFAULT_SETTINGS = {
@@ -17,6 +19,14 @@ const DEFAULT_SETTINGS = {
   autoSyncGoogle: false,
   autoNumberWordCase: 'TitleCase'
 };
+
+const SAMPLE_PARTIES = [
+  { id: 'pty_1', name: 'Reliance Retail Ltd', draweeBank: 'HDFC Bank, Fort' },
+  { id: 'pty_2', name: 'Apex Logistics Solutions', draweeBank: 'ICICI Bank, Nariman Point' },
+  { id: 'pty_3', name: 'Dr. Rahul S. Sharma', draweeBank: 'State Bank of India' },
+  { id: 'pty_4', name: 'Tata Motors Commercial', draweeBank: 'Axis Bank, Worli' },
+  { id: 'pty_5', name: 'Mahindra & Mahindra Ltd', draweeBank: 'Kotak Mahindra Bank' }
+];
 
 const SAMPLE_ACCOUNT = {
   id: 'acc_default_1',
@@ -187,5 +197,76 @@ export const Storage = {
     });
 
     return [headers.join(','), ...rows].join('\n');
+  },
+
+  // --- FREQUENT PARTIES DIRECTORY ---
+  getParties() {
+    try {
+      const data = localStorage.getItem(STORAGE_KEYS.PARTIES);
+      if (!data) {
+        localStorage.setItem(STORAGE_KEYS.PARTIES, JSON.stringify(SAMPLE_PARTIES));
+        return SAMPLE_PARTIES;
+      }
+      return JSON.parse(data);
+    } catch (e) {
+      console.error('Error reading parties', e);
+      return SAMPLE_PARTIES;
+    }
+  },
+
+  saveParty(party) {
+    const parties = this.getParties();
+    if (party.id) {
+      const idx = parties.findIndex(p => p.id === party.id);
+      if (idx !== -1) {
+        parties[idx] = { ...parties[idx], ...party };
+      } else {
+        parties.push(party);
+      }
+    } else {
+      party.id = 'pty_' + Date.now();
+      parties.push(party);
+    }
+    localStorage.setItem(STORAGE_KEYS.PARTIES, JSON.stringify(parties));
+    return party;
+  },
+
+  deleteParty(id) {
+    let parties = this.getParties();
+    parties = parties.filter(p => p.id !== id);
+    localStorage.setItem(STORAGE_KEYS.PARTIES, JSON.stringify(parties));
+    return parties;
+  },
+
+  autoRecordParty(name, draweeBank) {
+    if (!name || !name.trim()) return;
+    const cleanName = name.trim();
+    const parties = this.getParties();
+    const existing = parties.find(p => p.name.toLowerCase() === cleanName.toLowerCase());
+    if (existing) {
+      if (draweeBank && draweeBank.trim()) {
+        existing.draweeBank = draweeBank.trim();
+      }
+      existing.lastUsed = Date.now();
+    } else {
+      parties.unshift({
+        id: 'pty_' + Date.now(),
+        name: cleanName,
+        draweeBank: (draweeBank || '').trim(),
+        lastUsed: Date.now()
+      });
+    }
+    // Limit to 200 parties
+    if (parties.length > 200) parties.pop();
+    localStorage.setItem(STORAGE_KEYS.PARTIES, JSON.stringify(parties));
+  },
+
+  // --- ONBOARDING TUTORIAL ---
+  hasSeenOnboarding() {
+    return localStorage.getItem(STORAGE_KEYS.ONBOARDING_SEEN) === 'true';
+  },
+
+  setOnboardingCompleted(val = true) {
+    localStorage.setItem(STORAGE_KEYS.ONBOARDING_SEEN, val ? 'true' : 'false');
   }
 };

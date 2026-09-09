@@ -53,6 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initState();
   initEventListeners();
   renderAll();
+  initOnboardingTutorial();
 });
 
 /**
@@ -80,6 +81,9 @@ function initState() {
   if (webhookInput && settings.googleWebhookUrl) {
     webhookInput.value = settings.googleWebhookUrl;
   }
+
+  // Load frequent parties datalist
+  renderPartiesDatalist();
 
   // Start with 2 blank rows if empty
   if (state.cheques.length === 0) {
@@ -356,6 +360,73 @@ function setupModalTriggers() {
     openModal('modalGuide');
   });
 
+  document.getElementById('btnOpenParties')?.addEventListener('click', () => {
+    renderPartiesTable();
+    openModal('modalParties');
+  });
+
+  document.getElementById('btnOpenTour')?.addEventListener('click', () => {
+    openTutorialModal(1);
+  });
+
+  // Frequent Parties Search and Add Handlers
+  document.getElementById('partySearchInput')?.addEventListener('input', (e) => {
+    renderPartiesTable(e.target.value);
+  });
+
+  document.getElementById('btnToggleAddParty')?.addEventListener('click', () => {
+    const form = document.getElementById('addPartyForm');
+    if (form) {
+      form.style.display = form.style.display === 'none' ? 'block' : 'none';
+      if (form.style.display === 'block') {
+        document.getElementById('inputNewPartyName')?.focus();
+      }
+    }
+  });
+
+  document.getElementById('btnCancelAddParty')?.addEventListener('click', () => {
+    const form = document.getElementById('addPartyForm');
+    if (form) {
+      form.reset();
+      form.style.display = 'none';
+    }
+  });
+
+  document.getElementById('addPartyForm')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('inputNewPartyName')?.value.trim();
+    const bank = document.getElementById('inputNewPartyBank')?.value.trim();
+    if (name && bank) {
+      Storage.saveParty({ name, draweeBank: bank });
+      renderPartiesTable();
+      renderPartiesDatalist();
+      document.getElementById('addPartyForm')?.reset();
+      document.getElementById('addPartyForm').style.display = 'none';
+      showToast(`Party "${name}" saved!`, 'success');
+    }
+  });
+
+  // Onboarding Tutorial Navigation Handlers
+  document.getElementById('btnTourNext')?.addEventListener('click', () => {
+    if (currentTutorialStep < 4) {
+      currentTutorialStep++;
+      showTutorialStep(currentTutorialStep);
+    } else {
+      completeTutorial();
+    }
+  });
+
+  document.getElementById('btnTourPrev')?.addEventListener('click', () => {
+    if (currentTutorialStep > 1) {
+      currentTutorialStep--;
+      showTutorialStep(currentTutorialStep);
+    }
+  });
+
+  document.getElementById('btnTourSkip')?.addEventListener('click', () => {
+    completeTutorial();
+  });
+
   // Close modals
   document.querySelectorAll('.close-modal').forEach(btn => {
     btn.addEventListener('click', closeAllModals);
@@ -412,11 +483,11 @@ function renderChequeTable() {
         <input type="date" class="table-input" value="${ch.chequeDate || state.depositDate}" data-field="chequeDate">
       </td>
       <td>
-        <input type="text" class="table-input" placeholder="Party / Drawer Name" 
-               value="${ch.partyName || ''}" data-field="partyName">
+        <input type="text" class="table-input party-name-input" placeholder="Party / Drawer Name" 
+               list="partiesDatalist" value="${ch.partyName || ''}" data-field="partyName">
       </td>
       <td>
-        <input type="text" class="table-input" placeholder="Bank & Branch" 
+        <input type="text" class="table-input drawee-bank-input" placeholder="Bank & Branch" 
                value="${ch.draweeBank || ''}" data-field="draweeBank">
       </td>
       <td>
@@ -435,6 +506,24 @@ function renderChequeTable() {
       input.addEventListener('input', (e) => {
         const field = e.target.dataset.field;
         ch[field] = e.target.value;
+
+        // Smart auto-fill for frequent parties
+        if (field === 'partyName') {
+          const typed = (e.target.value || '').trim().toLowerCase();
+          if (typed.length >= 2) {
+            const parties = Storage.getParties();
+            const matched = parties.find(p => p.name.toLowerCase() === typed);
+            if (matched && matched.draweeBank) {
+              ch.draweeBank = matched.draweeBank;
+              const bankInput = tr.querySelector('.drawee-bank-input');
+              if (bankInput && (!bankInput.value || bankInput.value === 'Bank Name')) {
+                bankInput.value = matched.draweeBank;
+                showToast(`Auto-filled: ${matched.draweeBank}`, 'info');
+              }
+            }
+          }
+        }
+
         updateSummaryAndPreview();
       });
     });
@@ -584,6 +673,14 @@ function saveCurrentBatchToHistory(syncedToSheets = false) {
     totalAmount: totalAmount,
     syncedToSheets: syncedToSheets
   };
+
+  // Auto-record frequent parties for future auto-fill
+  validCheques.forEach(ch => {
+    if (ch.partyName && ch.partyName.trim()) {
+      Storage.autoRecordParty(ch.partyName, ch.draweeBank);
+    }
+  });
+  renderPartiesDatalist();
 
   return Storage.saveBatch(batch);
 }
@@ -922,4 +1019,107 @@ function renderAll() {
   renderAccountBanner();
   renderChequeTable();
   updateSummaryAndPreview();
+}
+
+/**
+ * Frequent Parties Directory & Autocomplete
+ */
+function renderPartiesDatalist() {
+  const datalist = document.getElementById('partiesDatalist');
+  if (!datalist) return;
+  const parties = Storage.getParties();
+  datalist.innerHTML = parties.map(p => `<option value="${p.name}">`).join('');
+}
+
+function renderPartiesTable(query = '') {
+  const tbody = document.getElementById('partiesTableBody');
+  if (!tbody) return;
+
+  const parties = Storage.getParties();
+  const q = (query || '').toLowerCase().trim();
+
+  const filtered = parties.filter(p => 
+    !q || p.name.toLowerCase().includes(q) || (p.draweeBank || '').toLowerCase().includes(q)
+  );
+
+  if (filtered.length === 0) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="3" style="text-align: center; color: var(--text-muted); padding: 1.5rem;">
+          No frequent parties found. Add one above or enter cheques in the table!
+        </td>
+      </tr>
+    `;
+    return;
+  }
+
+  tbody.innerHTML = filtered.map(p => `
+    <tr>
+      <td style="font-weight: 700; color: var(--text-primary);">${p.name}</td>
+      <td style="color: var(--text-secondary); font-size: 0.82rem;">${p.draweeBank || '-'}</td>
+      <td style="text-align: center;">
+        <button class="btn btn-ghost btn-icon btn-sm btn-delete-party" data-id="${p.id}" title="Delete Party" style="color: var(--accent-rose);">
+          ✕
+        </button>
+      </td>
+    </tr>
+  `).join('');
+
+  tbody.querySelectorAll('.btn-delete-party').forEach(btn => {
+    btn.addEventListener('click', () => {
+      Storage.deleteParty(btn.dataset.id);
+      renderPartiesTable(query);
+      renderPartiesDatalist();
+      showToast('Party removed from directory', 'info');
+    });
+  });
+}
+
+/**
+ * Interactive Onboarding Tutorial Engine
+ */
+let currentTutorialStep = 1;
+
+function initOnboardingTutorial() {
+  if (!Storage.hasSeenOnboarding()) {
+    setTimeout(() => {
+      openTutorialModal(1);
+    }, 600);
+  }
+}
+
+function openTutorialModal(step = 1) {
+  currentTutorialStep = step;
+  showTutorialStep(currentTutorialStep);
+  document.getElementById('modalOnboarding')?.classList.add('active');
+}
+
+function showTutorialStep(step) {
+  const slides = document.querySelectorAll('.tutorial-slide');
+  const dots = document.querySelectorAll('.tour-dot');
+
+  slides.forEach(slide => {
+    const s = parseInt(slide.dataset.step, 10);
+    slide.style.display = s === step ? 'block' : 'none';
+  });
+
+  dots.forEach(dot => {
+    const s = parseInt(dot.dataset.step, 10);
+    dot.style.background = s === step ? 'var(--accent-primary)' : 'var(--border-medium)';
+    dot.style.width = s === step ? '20px' : '8px';
+    dot.style.borderRadius = s === step ? '4px' : '50%';
+  });
+
+  const btnPrev = document.getElementById('btnTourPrev');
+  const btnNext = document.getElementById('btnTourNext');
+  if (btnPrev) btnPrev.style.display = step > 1 ? 'inline-flex' : 'none';
+  if (btnNext) {
+    btnNext.textContent = step === 4 ? 'Get Started ✨' : 'Next Step →';
+  }
+}
+
+function completeTutorial() {
+  Storage.setOnboardingCompleted(true);
+  closeAllModals();
+  showToast('Welcome to ChequeSlip! Click "Tour" in the top bar anytime for a refresher.', 'info');
 }
