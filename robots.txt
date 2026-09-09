@@ -1,0 +1,42 @@
+# Robots.txt for ChequeSlip (https://chequeslip.vercel.app)
+# Designed for high search visibility and AI assistant discovery (GEO)
+
+User-agent: *
+Allow: /
+
+# Explicitly welcome AI Search & LLM Crawlers
+User-agent: Googlebot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Cohere-ai
+Allow: /
+
+# LLM Specification & Sitemap
+Sitemap: https://chequeslip.vercel.app/sitemap.xml

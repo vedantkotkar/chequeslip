@@ -1,0 +1,16 @@
+{
+  "name": "ChequeSlip — Bank Cheque Deposit Slip Generator",
+  "short_name": "ChequeSlip",
+  "description": "Free, 100% private online cheque deposit slip and bulk annexure generator for all Indian banks from Kotkar Labs.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1d4ed8",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

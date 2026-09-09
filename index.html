@@ -3,8 +3,40 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ChequeSlip — from Kotkar Labs | Free Cheque Deposit Slip & Bulk Annexure Generator</title>
-  <meta name="description" content="Professional, 100% private, client-side utility from Kotkar Labs to generate print-ready bank pay-in slips, bulk cheque annexures, and auto-sync with Google Sheets.">
+  
+  <!-- Primary SEO Meta Tags -->
+  <title>ChequeSlip | Free Indian Bank Cheque Deposit Slip & Bulk Annexure Generator</title>
+  <meta name="title" content="ChequeSlip | Free Indian Bank Cheque Deposit Slip & Bulk Annexure Generator">
+  <meta name="description" content="Free, 100% private online cheque deposit slip and bulk annexure generator for all Indian banks (HDFC, SBI, ICICI, Axis, Kotak, PNB). Paste from Excel, auto-fill frequent parties, convert amounts to Indian words (Lakhs/Crores), and sync to Google Sheets.">
+  <meta name="keywords" content="cheque deposit slip, bank pay in slip, cheque deposit slip generator, bulk cheque annexure, hdfc cheque deposit slip, sbi pay in slip online, icici cheque slip print, axis bank cheque deposit slip, excel to cheque deposit slip, tally cheque deposit schedule, cheque amount in words converter, kotkar labs, chequeslip">
+  <meta name="author" content="Kotkar Labs">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <link rel="canonical" href="https://chequeslip.vercel.app/">
+
+  <!-- Favicon & Mobile Icons -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="manifest" href="site.webmanifest">
+  <meta name="theme-color" content="#1d4ed8">
+  <meta name="application-name" content="ChequeSlip">
+  <meta name="apple-mobile-web-app-title" content="ChequeSlip">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://chequeslip.vercel.app/">
+  <meta property="og:title" content="ChequeSlip | Free Indian Bank Cheque Deposit Slip & Bulk Annexure Generator">
+  <meta property="og:description" content="Never handwrite cheque deposit slips again. Generate bank-ready CTS-2010 deposit slips and bulk annexures for HDFC, SBI, ICICI & all Indian banks. 100% private, free, from Kotkar Labs.">
+  <meta property="og:image" content="https://chequeslip.vercel.app/favicon.svg">
+  <meta property="og:site_name" content="ChequeSlip by Kotkar Labs">
+  <meta property="og:locale" content="en_IN">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="https://chequeslip.vercel.app/">
+  <meta name="twitter:title" content="ChequeSlip | Free Indian Bank Cheque Deposit Slip & Bulk Annexure Generator">
+  <meta name="twitter:description" content="Print bank-compliant cheque pay-in slips and bulk annexures for Indian banks in seconds. 100% free & local-first.">
+  <meta name="twitter:image" content="https://chequeslip.vercel.app/favicon.svg">
   
   <!-- Fonts: Inter, Outfit, JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,6 +46,112 @@
   <!-- Stylesheets -->
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/print.css">
+
+  <!-- Schema.org JSON-LD for Google & AI Assistants (GEO) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "@id": "https://chequeslip.vercel.app/#webapp",
+        "url": "https://chequeslip.vercel.app/",
+        "name": "ChequeSlip",
+        "alternateName": "ChequeSlip by Kotkar Labs",
+        "description": "Free, 100% private client-side utility to generate bank-compliant cheque deposit slips, bulk cheque deposit annexures, and auto-sync with Google Sheets for all Indian banks.",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "All modern web browsers (Chrome, Edge, Safari, Firefox)",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "INR"
+        },
+        "author": {
+          "@type": "Organization",
+          "name": "Kotkar Labs",
+          "url": "https://github.com/vedantkotkar"
+        },
+        "featureList": [
+          "Standard CTS-2010 Bank Cheque Deposit Slip with Customer Counterfoil",
+          "Bulk Cheque Deposit Annexure Schedule for 3 or more cheques",
+          "One-Click Paste from Microsoft Excel, Google Sheets, and Tally ERP/Prime",
+          "Smart Drawee Bank & Branch Auto-Fill with Frequent Parties Directory",
+          "Automatic Indian Rupee Words Conversion in Lakhs and Crores",
+          "Direct Google Sheets Cloud Ledger Sync without Middlemen",
+          "100% Client-Side Local-First Privacy (Zero Server Storage)"
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://chequeslip.vercel.app/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Can I print a computer-generated cheque deposit slip instead of using the bank booklet?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes! Indian banks including HDFC Bank, State Bank of India (SBI), ICICI Bank, Axis Bank, and all scheduled commercial banks accept clear computer-printed pay-in slips and bulk annexures as per Reserve Bank of India (RBI) CTS-2010 processing guidelines, provided the 16-digit account number, branch, cheque details, and depositor signature are clearly legible."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I deposit multiple cheques (5, 10, or 20) at once in an Indian bank?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Instead of filling out multiple individual bank slips, banks officially encourage using a Cheque Deposit Annexure Schedule. ChequeSlip lets you paste all cheques directly from Excel or Tally, generates a clean 1-page Annexure listing Cheque Number, Date, Party Name, Drawee Bank, and Amounts with a Bank Receiving Stamp block, which the teller signs and stamps."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is ChequeSlip free to use and is my financial data safe?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "ChequeSlip is completely free and built with a 100% client-side, local-first architecture. Zero bank account numbers, party names, or financial amounts are transmitted to any external server. All data stays strictly in your browser LocalStorage."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I copy and paste cheques from Excel or Tally into ChequeSlip?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. ChequeSlip features a smart 'Paste from Excel' tool that parses tab-separated or comma-separated clipboard text from Excel, Google Sheets, or Tally. It automatically maps cheque numbers, dates, parties, banks, and figures into words."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How does frequent party auto-fill work?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "ChequeSlip includes a smart Frequent Parties Directory. Every time you deposit cheques, party names and their drawee banks are remembered. When you start typing a party name in subsequent batches, ChequeSlip auto-completes the name and automatically fills their Drawee Bank & Branch."
+            }
+          }
+        ]
+      },
+      {
+        "@type": "HowTo",
+        "@id": "https://chequeslip.vercel.app/#howto",
+        "name": "How to Generate and Print an Indian Bank Cheque Deposit Slip",
+        "step": [
+          {
+            "@type": "HowToStep",
+            "name": "Select or Add Your Bank Account",
+            "text": "Choose your primary bank account (e.g. HDFC, SBI, ICICI) with your account number and branch name."
+          },
+          {
+            "@type": "HowToStep",
+            "name": "Enter Cheque Details or Paste from Excel",
+            "text": "Type the Cheque Number, Party Name, Drawee Bank, and Amount, or click 'Paste from Excel' to import multiple cheques in bulk."
+          },
+          {
+            "@type": "HowToStep",
+            "name": "Print Slip or Annexure",
+            "text": "Click 'Print Bank Slip' for 1-2 cheques or 'Print Bulk Annexure' for 3+ cheques. The document is calibrated for crisp A4 printing with customer counterfoil and teller record."
+          }
+        ]
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
 
@@ -246,6 +384,153 @@
       </div>
 
     </main>
+
+    <!-- SEO Knowledge Hub, Supported Banks & FAQ Section (High Search & AI Intent) -->
+    <section class="seo-knowledge-hub no-print" aria-label="ChequeSlip Knowledge Hub & FAQ">
+      <div class="seo-hub-header">
+        <div class="seo-badge">Banking Automation & Compliance Guide</div>
+        <h2 class="seo-hub-title">The Modern Standard for Cheque Deposit Slips & Bulk Annexures in India</h2>
+        <p class="seo-hub-description">
+          Filling out bank pay-in slips by hand is slow, error-prone, and frustrating—especially when handling multiple client cheques every week. 
+          <strong>ChequeSlip from Kotkar Labs</strong> is a free, 100% client-side utility engineered to generate bank-compliant pay-in slips and bulk deposit annexures accepted by tellers at all Indian commercial banks.
+        </p>
+      </div>
+
+      <!-- Core Capabilities Grid -->
+      <div class="seo-features-grid">
+        <div class="seo-feature-card">
+          <div class="seo-feature-icon">🏦</div>
+          <h3>CTS-2010 Compliant Pay-in Slips</h3>
+          <p>Features standard bank layout with 16-digit account number boxes, clear customer counterfoil (receipt), teller copy, and scissor cut guideline. Perfect for 1 to 2 cheques.</p>
+        </div>
+        <div class="seo-feature-card">
+          <div class="seo-feature-icon">📑</div>
+          <h3>Bulk Cheque Deposit Annexures</h3>
+          <p>Deposit 3, 10, or 25+ cheques into one account without filling out 10 separate booklet slips. Produces an official 1-page Annexure schedule accepted by branch cashiers nationwide.</p>
+        </div>
+        <div class="seo-feature-card">
+          <div class="seo-feature-icon">⚡</div>
+          <h3>Frequent Parties & Drawee Auto-Fill</h3>
+          <p>Receive cheques from repeating clients or vendors? ChequeSlip automatically memorizes frequent parties and auto-fills their default Drawee Bank & Branch as you type.</p>
+        </div>
+        <div class="seo-feature-card">
+          <div class="seo-feature-icon">📋</div>
+          <h3>One-Click Excel & Tally Import</h3>
+          <p>Copy multiple cheque rows directly from Microsoft Excel, Google Sheets, or Tally ERP/Prime. ChequeSlip instantly parses columns and converts amounts into Indian words (Lakhs & Crores).</p>
+        </div>
+        <div class="seo-feature-card">
+          <div class="seo-feature-icon">📊</div>
+          <h3>Direct Google Sheets Cloud Sync</h3>
+          <p>Sync your deposits directly to your private Google Drive spreadsheet via a lightweight Google Apps Script webhook—no third-party middleman, subscriptions, or API keys needed.</p>
+        </div>
+        <div class="seo-feature-card">
+          <div class="seo-feature-icon">🔒</div>
+          <h3>100% Local-First Privacy Guarantee</h3>
+          <p>Financial privacy is non-negotiable. ChequeSlip processes all data strictly inside your browser's local sandbox. Zero bank account numbers or financial figures are sent to any server.</p>
+        </div>
+      </div>
+
+      <!-- Supported Banks Section -->
+      <div class="seo-banks-section">
+        <div class="seo-banks-title">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 14v4M12 14v4M16 14v4"></path></svg>
+          <span>Supported Indian Banks & Financial Institutions:</span>
+        </div>
+        <div class="seo-banks-cloud">
+          <span class="bank-tag">HDFC Bank</span>
+          <span class="bank-tag">State Bank of India (SBI)</span>
+          <span class="bank-tag">ICICI Bank</span>
+          <span class="bank-tag">Axis Bank</span>
+          <span class="bank-tag">Kotak Mahindra Bank</span>
+          <span class="bank-tag">Punjab National Bank (PNB)</span>
+          <span class="bank-tag">Bank of Baroda</span>
+          <span class="bank-tag">Canara Bank</span>
+          <span class="bank-tag">Union Bank of India</span>
+          <span class="bank-tag">IndusInd Bank</span>
+          <span class="bank-tag">IDFC First Bank</span>
+          <span class="bank-tag">Federal Bank</span>
+          <span class="bank-tag">Yes Bank</span>
+          <span class="bank-tag">Central Bank of India</span>
+          <span class="bank-tag">Indian Bank</span>
+          <span class="bank-tag">Cooperative & Regional Rural Banks</span>
+        </div>
+      </div>
+
+      <!-- FAQ Section (Schema.org Aligned) -->
+      <div class="seo-faq-section">
+        <h3 class="seo-faq-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+          <span>Frequently Asked Questions about Cheque Deposit Slips in India</span>
+        </h3>
+        <div class="faq-accordion-group">
+          
+          <details class="faq-item" open>
+            <summary>
+              <span>Can I print a computer-generated cheque deposit slip instead of using the bank booklet?</span>
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </summary>
+            <div class="faq-content">
+              <p><strong>Yes, absolutely.</strong> Indian commercial banks—including HDFC Bank, State Bank of India (SBI), ICICI Bank, Axis Bank, and Kotak Mahindra Bank—readily accept computer-printed pay-in slips and annexures.</p>
+              <p>Under Reserve Bank of India (RBI) CTS-2010 cheque clearing regulations, the deposit slip is an administrative receipt. As long as your 16-digit account number, branch, drawer/party name, cheque numbers, and depositor signature are clearly printed and legible, bank cashiers accept them without hesitation.</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>
+              <span>How do I deposit multiple cheques (5, 10, or 20) at once into my bank account?</span>
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </summary>
+            <div class="faq-content">
+              <p>When depositing 3 or more cheques, handwriting individual bank slips takes excessive time and clutters your accounting records. Banks officially prefer a <strong>Bulk Cheque Deposit Annexure (Schedule)</strong>.</p>
+              <p>With ChequeSlip, switch to <em>"Bulk Annexure"</em> mode or click <em>"Paste from Excel"</em>. ChequeSlip produces a single, professional A4 schedule containing all cheque numbers, dates, drawee banks, and amounts, with an authorized receiving stamp box for the bank teller.</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>
+              <span>Is ChequeSlip free and is my sensitive banking information safe?</span>
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </summary>
+            <div class="faq-content">
+              <p><strong>100% Free & 100% Local-First:</strong> ChequeSlip is an open, privacy-focused utility built by Kotkar Labs. There are no fees, subscriptions, or login requirements.</p>
+              <p>Your account numbers, client names, and cheque amounts are never sent to any server. Everything is stored strictly inside your browser's private LocalStorage sandbox. You can even run ChequeSlip offline without an internet connection.</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>
+              <span>Can I import cheques directly from Microsoft Excel or Tally?</span>
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </summary>
+            <div class="faq-content">
+              <p>Yes. Click the <strong>"Paste from Excel"</strong> button in ChequeSlip. Copy rows from any spreadsheet (Excel, Google Sheets, LibreOffice) or export from Tally ERP / TallyPrime. ChequeSlip automatically maps your columns (Cheque No, Date, Party Name, Bank, Amount) and converts totals into Indian words (Lakhs and Crores) instantly.</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>
+              <span>How does recurring party auto-fill save time?</span>
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </summary>
+            <div class="faq-content">
+              <p>If you receive cheques from the same clients, tenants, or vendors each month, you no longer have to re-type their drawee bank and branch. ChequeSlip features a built-in <strong>Frequent Parties Directory</strong>. When you start typing a client's name, ChequeSlip auto-completes it and instantly fills their Drawee Bank & Branch.</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>
+              <span>How does the Google Sheets integration work?</span>
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </summary>
+            <div class="faq-content">
+              <p>ChequeSlip connects directly to your own Google Drive using a free, self-hosted Google Apps Script webhook (takes under 2 minutes to set up). Each time you deposit a batch, clicking <em>"Sync to Google Sheet"</em> appends the date, cheque numbers, drawee banks, and amounts into your private spreadsheet ledger without third-party tools.</p>
+            </div>
+          </details>
+
+        </div>
+      </div>
+    </section>
+
 
     <!-- Professional App Footer -->
     <footer class="no-print app-footer">
